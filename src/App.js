@@ -25,12 +25,15 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 function App() {
+
+  // Check if user is signed in or signed out, if signed in, it will show user as an object, if signed out, it will show user as null
+  const [user] = useAuthState(auth);
+
   return (
     <div className="App">
-      <SignIn/>
-      <SignOut/>
-      <ChatRoom/>
-      <ChatMessage/>
+      <section>
+        {user ? <ChatRoom /> : <SignIn />}
+      </section>
     </div>
   );
 }
