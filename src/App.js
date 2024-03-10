@@ -7,7 +7,7 @@ import 'firebase/auth';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import SignIn from './components/SignIn';
+
 
 // Firebase configuration
 firebase.initializeApp({
@@ -36,6 +36,77 @@ function App() {
       </section>
     </div>
   );
+}
+
+function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  }
+  
+  return (
+    <button onClick={signInWithGoogle}>
+      Sign in with Google
+    </button>
+  )
+}
+
+function SignOut() {
+  return auth.currentUser && (
+    <button onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
+
+function ChatRoom() {
+
+  const dummy = useRef();
+
+  //reference a firestore collection
+  const messagesRef = firestore.collection('messages');
+
+  //query documents in a collection
+  const query = messagesRef.orderBy('createdAt').limit(25);
+
+  //listen to data with a hook
+  const [messages] = useCollectionData(query, {idField: 'id'});
+
+  const [formValue, setFormValue] = useState('');
+
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    const { uid, photoURL } = auth.currentUser;
+
+    await messagesRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL
+    })
+
+    setFormValue('');
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  return (<>
+    <main>
+
+      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+
+      <span ref={dummy}></span>
+
+    </main>
+
+    <form onSubmit={sendMessage}>
+
+      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+
+      <button type="submit" disabled={!formValue}>🕊️</button>
+
+    </form>
+  </>)
+
 }
 
 export default App;
