@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 import './App.css';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { initializeApp } from "firebase/app";
 
 
-// Firebase configuration
-firebase.initializeApp({
+const firebaseConfig = {
   apiKey: "AIzaSyCOL5vL9ic0vFsoHGEDAl5Ro0sE6lQ6roc",
   authDomain: "superchat-8d4e5.firebaseapp.com",
   projectId: "superchat-8d4e5",
@@ -18,16 +18,19 @@ firebase.initializeApp({
   messagingSenderId: "155023605232",
   appId: "1:155023605232:web:05c143c9c7840a78783135",
   measurementId: "G-JR8K3BR4HR"
-})
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 // Firebase services
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+const auth = getAuth(app);
+const firestore = firebase.firestore(app);
 
 function App() {
 
   // Check if user is signed in or signed out, if signed in, it will show user as an object, if signed out, it will show user as null
-  const [user] = useAuthState(auth);
+  const [user] = getAuth(auth);
 
   return (
     <div className="App">
