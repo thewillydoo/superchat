@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This application, named "Superchat", is a real-time chat application built using React and Firebase. The project uses Firebase's Firestore for real-time data handling and Firebase Authentication for user management. SuperChat allows users to sign in, send messages, and view messages from other users in real-time. This structure of this code is to initialize Firebase, set up Firebase services, and then define the main App component. Overall, this project showcases the use of modern web technologies for building a real-time interactive application.
+"Superchat" is a real-time chat application built using React and Firebase. The project uses Firebase's Firestore for real-time data handling and Firebase Authentication for user management. SuperChat allows users to sign in, send messages, and view messages from other users in real-time. This structure of this code is to initialize Firebase, set up Firebase services, and then define the main App component. Overall, this project showcases the use of modern web technologies for building a real-time interactive application.
 
 #
 
