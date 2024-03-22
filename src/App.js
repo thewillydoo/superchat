@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { initializeApp } from "firebase/app";
 
-
+ 
 const firebaseConfig = {
   apiKey: "AIzaSyCOL5vL9ic0vFsoHGEDAl5Ro0sE6lQ6roc",
   authDomain: "superchat-8d4e5.firebaseapp.com",
